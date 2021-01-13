@@ -7,7 +7,7 @@ import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-out/sign-in-and-sign-out.component";
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileFileDocument } from "./firebase/firebase.utils";
 
 import './App.css';
 class App extends React.Component {
@@ -23,9 +23,24 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
-      console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        // storing user data in our firebase database
+        const userRef = await createUserProfileFileDocument(userAuth);
+        // updating the user details in state 
+        userRef.onSnapshot(snapshot => {
+          this.setState({
+            currentUser: {
+              id: snapshot.id,
+              ...snapshot.data()
+            }
+          });
+          // console.log(snapshot.data());
+          console.log(this.state);
+        });
+      }
+      // if user logout or null then null will be update there
+      this.setState({ currentUser: userAuth });
     });
   }
 
