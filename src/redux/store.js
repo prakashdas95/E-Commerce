@@ -10,9 +10,9 @@ import rootReducer from "./root-reducer";
 
 // middleware - whenever action get fired or dispatched we can catch them and then display them.
 
-const middlewares = [logger];
+const middlewares = [];
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'production') {
     middlewares.push(logger);
 }
 
