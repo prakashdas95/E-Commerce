@@ -38,20 +38,22 @@ export const createUserProfileFileDocument = async (userAuth, additionalData) =>
     return userRef;
 };
 
+//purpose - saving SHOP_DATA to firebase
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
     const collectionRef = firestore.collection(collectionKey);
     // console.log(collectionRef);
 
     const batch = firestore.batch();
     objectsToAdd.forEach(obj => {
-        const newDocRef = collectionRef.doc(obj.title);
+        const newDocRef = collectionRef.doc();
         // console.log(newDocRef);
         batch.set(newDocRef, obj);
     });
     return await batch.commit();
 }
 
-export const covertCollectionsSnapshotToMap = (collections) => {
+// WHEN WE FETCH COLLECTIONS DATA FROM FIRESTORE AND ADDING SOME SOME EXTRA PROPERTIES TO IT LIKE routeName,id,title,items
+export const convertCollectionsSnapshotToMap = (collections) => {
     const transformedCollection = collections.docs.map(doc => {
         const { title, items } = doc.data();
 

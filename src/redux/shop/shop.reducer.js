@@ -1,9 +1,11 @@
-import SHOP_DATA from "./shop.data";
+//purpose - saving SHOP_DATA to firebase
+// import SHOP_DATA from "./shop.data";
 
 import ShopActionTypes from './shop.types';
 
 const INITIAL_STATE = {
-    collections: SHOP_DATA
+    collections: null
+    // collections: SHOP_DATA //purpose - saving SHOP_DATA to firebase
 };
 
 const shopReducer = (state = INITIAL_STATE, action) => {
