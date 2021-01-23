@@ -2,7 +2,7 @@
 import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
 import { persistStore } from 'redux-persist';
-
+import thunk from 'redux-thunk';
 
 import rootReducer from "./root-reducer";
 
@@ -10,7 +10,7 @@ import rootReducer from "./root-reducer";
 
 // middleware - whenever action get fired or dispatched we can catch them and then display them.
 
-const middlewares = [];
+const middlewares = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
     middlewares.push(logger);
