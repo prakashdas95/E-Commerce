@@ -26,15 +26,35 @@ class ShopPage extends React.Component {
 
         const collectionRef = firestore.collection('collections');
 
-        collectionRef.onSnapshot(async snapshot => {
-            // console.log(snapshot);
+
+        //fetch - way  -- need to check correct url 
+        // fetch('https://firestore.googleapis.com/v1/projects/crwn-db-202f1/databases/(default)/documents')
+        //     .then(response => response.json())
+        //     .then(collections => console.log(collections))
+
+
+        // //Promise - way
+        // collectionRef.get()
+        //     .then(snapshot => {
+        //         const collectionMap = convertCollectionsSnapshotToMap(snapshot);
+        //         // storing data to our shop reducer
+        //         updateCollections(collectionMap);
+        //         this.setState({ loading: false });
+        //     })
+
+        // obversable - way
+        this.unsubscribeFromSnapshot = collectionRef.onSnapshot(snapshot => {
             const collectionMap = convertCollectionsSnapshotToMap(snapshot);
-            console.log(collectionMap);
             // storing data to our shop reducer
             updateCollections(collectionMap);
             this.setState({ loading: false });
         });
     }
+
+    // componentWillUnmount() {
+    //     this.unsubscribeFromSnapshot();
+    // }
+
 
     render() {
         const { match } = this.props;
