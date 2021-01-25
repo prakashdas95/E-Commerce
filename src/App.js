@@ -15,9 +15,16 @@ import SignInAndSignUpPage from "./pages/sign-in-and-sign-out/sign-in-and-sign-o
 
 import { selectCurrentUser } from './redux/user/user.selectors';
 
-//purpose - saving SHOP_DATA to firebase
-// import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
+import { checkUserSession } from "./redux/user/user.actions";
+
 class App extends React.Component {
+  unsubscribeFromAuth = null;
+
+  componentDidMount() {
+    const { checkUserSession } = this.props;
+    checkUserSession();
+  }
+
 
   render() {
     return (
@@ -46,4 +53,8 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
