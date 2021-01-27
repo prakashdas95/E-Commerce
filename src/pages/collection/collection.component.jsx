@@ -9,8 +9,6 @@ import { CollectionItemsContainer, CollectionPageContainer, CollectionTitle } fr
 import './collection.styles.scss';
 
 const CollectionPage = ({ collection }) => {
-    console.log('collections');
-    console.log(collection);
     const { title, items } = collection;
 
     return (
