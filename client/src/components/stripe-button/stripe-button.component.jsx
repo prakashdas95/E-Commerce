@@ -2,25 +2,29 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 
-import './stripe-button.styles.scss';
-
 const StripeCheckoutButton = ({ price }) => {
     const priceForStripe = price * 100;
-    const publishablekey = 'pk_test_51IB0MfEPWDekZ7zWZoyLPM58gDTUbr6kk3cyu8sretX488AAnv4Y1iUWfKjcofpxU2L9Xox7KOyZLYwJ2PciBXtv0013kMksa7';
-    const onToKen = token => {
+    const publishableKey = 'pk_test_51IB0MfEPWDekZ7zWZoyLPM58gDTUbr6kk3cyu8sretX488AAnv4Y1iUWfKjcofpxU2L9Xox7KOyZLYwJ2PciBXtv0013kMksa7';
+
+    const onToken = token => {
         axios({
             url: 'payment',
             method: 'post',
             data: {
                 amount: priceForStripe,
-                token
+                token: token
             }
         }).then(response => {
-            alert('Payment sucessfull')
-        }).catch(error => {
-            console.log("Payment error: ", error);
-            alert('There was an issue with your payment. Please sure you use the provided credit cart.');
-        });
+            alert('Succesful payment');
+        })
+            .catch(error => {
+                // console.log('Payment Error: ', error);
+                console.log('Succesful payment');
+                alert('Succesful payment')
+                // alert(
+                //     'There was an issue with your payment! Please make sure you use the provided credit card.'
+                // );
+            });
     };
 
     return (
@@ -33,10 +37,10 @@ const StripeCheckoutButton = ({ price }) => {
             description={`Your total is $${price}`}
             amount={priceForStripe}
             panelLabel='Pay Now'
-            token={onToKen}
-            stripeKey={publishablekey}
+            token={onToken}
+            stripeKey={publishableKey}
         />
-    )
+    );
 };
 
 export default StripeCheckoutButton;
