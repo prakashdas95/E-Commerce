@@ -6,6 +6,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { store, persistor } from "./redux/store";
 
+import * as serviceWorker from './service-worker';
+
 import App from './App';
 import './index.css';
 
@@ -24,6 +26,8 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+serviceWorker.register();
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
